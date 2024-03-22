@@ -16,7 +16,7 @@ namespace LegacyApp
                 return false;
             }
 
-            if (!CheckTheAge(dateOfBirth))
+            if (CheckTheAge(dateOfBirth))
             {
                 return false;
             }
@@ -33,7 +33,7 @@ namespace LegacyApp
                 LastName = lastName
             };
 
-            if (!LimitCalculator(user,client))
+            if (LimitCalculator(user,client))
             {
                 return false;
             }
@@ -66,13 +66,8 @@ namespace LegacyApp
                     user.CreditLimit = creditLimit;
                 }
             }
-            
-            if (user.HasCreditLimit && user.CreditLimit < 500)
-            {
-                return false;
-            }
 
-            return true;
+            return user.HasCreditLimit && user.CreditLimit < 500;
         }
 
         private static bool CheckTheAge(DateTime dateOfBirth)
@@ -81,12 +76,7 @@ namespace LegacyApp
             int age = now.Year - dateOfBirth.Year;
             if (now.Month < dateOfBirth.Month || (now.Month == dateOfBirth.Month && now.Day < dateOfBirth.Day)) age--;
 
-            if (age < 21)
-            {
-                return false;
-            }
-
-            return true;
+            return age < 21;
         }
     }
 }
