@@ -16,11 +16,11 @@ namespace LegacyApp
                 return false;
             }
 
-            if (!checkTheAge(dateOfBirth))
+            if (!CheckTheAge(dateOfBirth))
             {
                 return false;
             }
-
+            
             var clientRepository = new ClientRepository();
             var client = clientRepository.GetById(clientId);
 
@@ -32,7 +32,18 @@ namespace LegacyApp
                 FirstName = firstName,
                 LastName = lastName
             };
-            
+
+            if (!LimitCalculator(user,client))
+            {
+                return false;
+            }
+
+            UserDataAccess.AddUser(user);
+            return true;
+        }
+
+        private static bool LimitCalculator(User user, Client client)
+        {
             if (client.Type == "VeryImportantClient")
             {
                 user.HasCreditLimit = false;
@@ -61,11 +72,10 @@ namespace LegacyApp
                 return false;
             }
 
-            UserDataAccess.AddUser(user);
             return true;
         }
 
-        private static bool checkTheAge(DateTime dateOfBirth)
+        private static bool CheckTheAge(DateTime dateOfBirth)
         {
             var now = DateTime.Now;
             int age = now.Year - dateOfBirth.Year;
