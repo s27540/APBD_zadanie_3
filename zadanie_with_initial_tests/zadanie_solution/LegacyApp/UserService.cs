@@ -33,7 +33,7 @@ namespace LegacyApp
                 LastName = lastName
             };
 
-            if (LimitCalculator(user,client))
+            if (CreditLimitChecker(user,client))
             {
                 return false;
             }
@@ -42,7 +42,7 @@ namespace LegacyApp
             return true;
         }
 
-        private static bool LimitCalculator(User user, Client client)
+        private static bool CreditLimitChecker(User user, Client client)
         {
             if (client.Type == "VeryImportantClient")
             {
